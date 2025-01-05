@@ -1,13 +1,28 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+/* Убираем стандартные стили для input */
+input {
+    outline: none;
+    box-shadow: none;
+    transition: box-shadow 0.3s ease-in-out, border 0.3s ease-in-out;
+  }
+/* Добавляем ховер и фокус */
+input:focus {
+    border-color: #0d6efd; /* Синий цвет, как в Bootstrap */
+    box-shadow: 0 0 8px rgba(13, 110, 253, 0.5);
+  }
+  
+  /* Стилизация списка */
+  ul.userList_ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  ul.userList_ul .list-group-item {
+    border: none;
+    transition: transform 0.3s ease;
+  }
+  
+  ul.userList_ul .list-group-item:hover {
+    background-color: #f8f9fa; /* Светлый фон */
+    transform: scale(1.02);
+  }
