@@ -13,38 +13,16 @@ const Form = () => {
   const [text, setText] = useState(false);
   const [isCheked, setIscheked] = useState(formData.checkbox);
 
+  const maskOptions = {
+    mask: "+{7}(000)000-00-00",
+    lazy: false,
+  };
+
   useEffect(() => {
-    // const appDiv = document.getElementById("form-control");
-    // appDiv.innerHTML = `<div className="form-control">
-    //     <label>
-    //       phone:
-    //       <input
-    //         id="input-normal-mask"
-    //         type="text"
-    //         name="phone"
-    //         placeholder="+7(000)000-00-00"
-    //       />
-    //     </label>
-    //   </div>`;
-    // const dock = document.getElementById("input-normal-mask");
-    // dock.setAttribute("value", "formData.phone");
-    // dock.setAttribute("onChange", "handleChange");
-    // dock.setAttribute("onPaste", "handleChange");
-
-    const inputNormalMask = document.getElementById("input-normal-mask");
-
-    const normalMaskOptions = {
-      mask: "+7(000)000-00-00",
-    };
-
-    const normalMask = IMask(inputNormalMask, normalMaskOptions);
-    inputNormalMask.addEventListener("focus", () => {
-      normalMask.updateOptions({ lazy: false });
-    });
-
-    inputNormalMask.addEventListener("blur", () => {
-      normalMask.updateOptions({ lazy: true });
-    });
+    const phone = document.querySelectorAll('input[name="phone"]');
+    for (let i = 0; i < phone.length; i++) {
+      new IMask(phone[i], maskOptions);
+    }
   }, []);
 
   const handleSubmit = (event) => {
@@ -93,8 +71,10 @@ const Form = () => {
       newErrors.email = "Некорректный email";
     }
 
-    const phoneRegex = /^(\+7|8)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
-    if (!formData.phone || !phoneRegex.test(formData.phone)) {
+    const phoneRegex = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
+    const phone = document.querySelectorAll('input[name="phone"]');
+
+    if (!phone[0].value || !phoneRegex.test(phone[0].value)) {
       newErrors.phone = "Некорректный номер телефона";
     }
 
@@ -184,20 +164,13 @@ const Form = () => {
             <span className="form-control-error">{errors.email}</span>
           )}
         </div>
-        {/* <div id="app"></div> */}
-        <div className="form-control">
-          <label>
-            phone:
-            <input
-              id="input-normal-mask"
-              type="text"
-              name="phone"
-              placeholder="+7(000)000-00-00"
-              value={formData.phone}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
+        <input
+          id="phone"
+          type="text"
+          name="phone"
+          placeholder="+7(000)000-00-00"
+          onKeyUp={handleChange}
+        />
         {errors.phone && (
           <span className="form-control-error">{errors.phone}</span>
         )}
